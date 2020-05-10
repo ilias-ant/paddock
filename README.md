@@ -1,8 +1,9 @@
-<p align="left"><img src="public/images/car.png" alt="F1-car" height="200px"></p>
-
 # *paddock*
 
-A simple application that analyzes F1 data, built with Ruby on Rails. This is a non-commercial project, aiming to bring together two of my hobbies: Formula One and software engineering :heart:
+A simple application that analyzes F1 data, built with Ruby on Rails. This is a non-commercial project, aiming to bring together two of my hobbies: Formula One and software engineering
+
+<p align="left"><img src="public/images/car.png" alt="F1-car" height="200px"></p>
+
 
 ## Dependencies (#WIP)
 
