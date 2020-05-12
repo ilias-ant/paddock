@@ -6,7 +6,7 @@ class CreateCircuits < ActiveRecord::Migration[6.0]
       t.string :location
       t.string :country
       t.float :lat
-      t.float :lnd
+      t.float :lng
       t.integer :alt
       t.string :url, null: false
 
