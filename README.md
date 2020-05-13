@@ -4,8 +4,7 @@ A simple application that analyzes F1 data, built with Ruby on Rails. This is a 
 
 <p align="left"><img src="public/images/car.png" alt="F1-car" height="200px"></p>
 
-
-## Dependencies (#WIP)
+## Made with
 
 - [Ruby](https://www.ruby-lang.org/en/downloads/): 2.6.5
 - [Rails](https://rubyonrails.org/): 6.0.3+
@@ -15,11 +14,15 @@ A simple application that analyzes F1 data, built with Ruby on Rails. This is a 
 
 Make sure you have installed all listed project dependencies. 
 
-Clone the project from **Github** and at the project's root directory run:
+Clone the project from Github and at the project's root directory run:
 
 ```shell
 $ bundle install
-$ rails db:migrate
+$ rails db:drop db:create db:migrate RAILS_ENV=development
+
+# seed the database with historic data
+rake db:import_ergast_data
+
 $ rails s
 ```
 Application will now be available at `http://localhost:3000/`.
