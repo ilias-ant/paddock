@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_205153) do
+ActiveRecord::Schema.define(version: 2020_05_13_190123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,26 @@ ActiveRecord::Schema.define(version: 2020_05_12_205153) do
     t.float "lng"
     t.integer "alt"
     t.string "url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "constructor_results", force: :cascade do |t|
+    t.integer "race_id", null: false
+    t.integer "constructor_id", null: false
+    t.float "points"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "constructor_standings", force: :cascade do |t|
+    t.integer "race_id", null: false
+    t.integer "constructor_id", null: false
+    t.float "points", null: false
+    t.integer "position"
+    t.string "position_text"
+    t.integer "wins", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

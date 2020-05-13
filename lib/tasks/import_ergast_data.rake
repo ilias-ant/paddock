@@ -19,8 +19,7 @@ namespace :db do
       Circuit.create!(id: circuit['circuitId'], nickname: circuit['circuitRef'],
                       name: circuit['name'], location: circuit['location'],
                       country: circuit['country'], lat: circuit['lat'],
-                      lng: circuit['lng'], alt: circuit['alt'],
-                      url: circuit['url'])
+                      lng: circuit['lng'], alt: circuit['alt'], url: circuit['url'])
     end
 
     constructors = CSV.parse(File.read(data_loc + 'constructors.csv'), headers: true)
@@ -37,6 +36,23 @@ namespace :db do
       Driver.create!(id: driver['driverId'], nickname: driver['driverRef'], number: driver['number'],
                      code: driver['code'], forename: driver['forename'], surname: driver['surname'],
                      dob: driver['dob'], nationality: driver['nationality'], url: driver['url'])
+    end
+
+    constructor_results = CSV.parse(File.read(data_loc + 'constructor_results.csv'), headers: true)
+
+    constructor_results.each do |result|
+      ConstructorResult.create!(id: result['constructorResultsId'], race_id: result['raceId'],
+                                constructor_id: result['constructorId'], points: result['points'],
+                                status: result['status'])
+    end
+
+    constructor_standings = CSV.parse(File.read(data_loc + 'constructor_standings.csv'), headers: true)
+
+    constructor_standings.each do |standing|
+      ConstructorStanding.create!(id: standing['constructorStandingsId'], race_id: standing['raceId'],
+                                  constructor_id: standing['constructorId'], points: standing['points'],
+                                  position: standing['position'], position_text: standing['positionText'],
+                                  wins: standing['wins'])
     end
   end
 end
