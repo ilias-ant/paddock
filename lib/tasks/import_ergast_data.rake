@@ -54,5 +54,22 @@ namespace :db do
                                   position: standing['position'], position_text: standing['positionText'],
                                   wins: standing['wins'])
     end
+
+    driver_standings = CSV.parse(File.read(data_loc + 'driver_standings.csv'), headers: true)
+
+    driver_standings.each do |standing|
+      DriverStanding.create!(id: standing['constructorStandingsId'], race_id: standing['raceId'],
+                             driver_id: standing['driverId'], points: standing['points'],
+                             position: standing['position'], position_text: standing['positionText'],
+                             wins: standing['wins'])
+    end
+
+    races = CSV.parse(File.read(data_loc + 'races.csv'), headers: true)
+
+    races.each do |race|
+      Race.create!(id: race['raceId'], year: race['year'], round: race['round'],
+                   circuit_id: race['circuitId'], name: race['name'], date: race['date'],
+                   time: race['time'], url: race['url'])
+    end
   end
 end

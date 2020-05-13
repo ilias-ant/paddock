@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_190123) do
+ActiveRecord::Schema.define(version: 2020_05_13_200612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 2020_05_13_190123) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "driver_standings", force: :cascade do |t|
+    t.integer "race_id", null: false
+    t.integer "driver_id", null: false
+    t.float "points", null: false
+    t.integer "position"
+    t.string "position_text"
+    t.integer "wins", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "drivers", force: :cascade do |t|
     t.string "forename", null: false
     t.string "surname", null: false
@@ -66,6 +77,18 @@ ActiveRecord::Schema.define(version: 2020_05_13_190123) do
     t.string "code", limit: 3
     t.string "nationality"
     t.string "url", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "races", force: :cascade do |t|
+    t.integer "year", null: false
+    t.integer "round", null: false
+    t.integer "circuit_id", null: false
+    t.string "name", null: false
+    t.date "date", null: false
+    t.time "time"
+    t.string "url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
