@@ -3,8 +3,10 @@
 require 'csv'
 
 namespace :db do
-  desc 'import F1 historic data into the database via csv files'
+  desc 'import F1 historic data into the database from CSVs'
   task import_ergast_data: :environment do
+    puts "Importing Ergast historic data into the #{Rails.env} database. This may take a while..."
+
     data_loc = 'public/ergast_data/'
 
     seasons = CSV.parse(File.read(data_loc + 'seasons.csv'), headers: true)
@@ -71,5 +73,49 @@ namespace :db do
                    circuit_id: race['circuitId'], name: race['name'], date: race['date'],
                    time: race['time'], url: race['url'])
     end
+
+    lap_times = CSV.parse(File.read(data_loc + 'lap_times.csv'), headers: true)
+
+    lap_times.each do |lt|
+      LapTime.create!(race_id: lt['raceId'], driver_id: lt['driverId'], lap: lt['lap'],
+                      position: lt['position'], time: lt['time'], milliseconds: lt['milliseconds'])
+    end
+
+    pit_stops = CSV.parse(File.read(data_loc + 'pit_stops.csv'), headers: true)
+
+    pit_stops.each do |ps|
+      PitStop.create!(race_id: ps['raceId'], driver_id: ps['driverId'], stop: ps['stop'],
+                      lap: ps['lap'], time: ps['time'], duration: ps['durations'],
+                      milliseconds: ps['milliseconds'])
+    end
+
+    qualifyings = CSV.parse(File.read(data_loc + 'qualifying.csv'), headers: true)
+
+    qualifyings.each do |quali|
+      Qualifying.create!(id: quali['qualifyId'], race_id: quali['raceId'], driver_id: quali['driverId'], 
+                         constructor_id: quali['constructorId'], number: quali['number'],
+                         position: quali['position'], q1: quali['q1'], q2: quali['q2'],
+                         q3: quali['q3'])
+    end
+
+    results = CSV.parse(File.read(data_loc + 'results.csv'), headers: true)
+
+    results.each do |res|
+      Result.create!(id: res['resultId'], race_id: res['raceId'], driver_id: res['driverId'],
+                     constructor_id: res['constructorId'], number: res['number'], grid: res['grid'],
+                     position: res['position'], position_text: res['positionText'],
+                     position_order: res['positionOrder'], points: res['points'], laps: res['laps'], 
+                     time: res['time'], milliseconds: res['milliseconds'], fastest_lap: res['fastestLap'], 
+                     rank: res['rank'], fastest_lap_time: res['fastestLapTime'],
+                     fastest_lap_speed: res['fastestLapSpeed'], status_id: res['statusId'])
+    end
+
+    statuses = CSV.parse(File.read(data_loc + 'status.csv'), headers: true)
+
+    statuses.each do |stat|
+      Status.create!(id: stat['statusId'], status: stat['status'])
+    end
+
+    puts 'Import completed!'
   end
 end
