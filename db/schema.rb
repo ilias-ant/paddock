@@ -156,6 +156,7 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
     t.string "url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["year"], name: "index_seasons_on_year", unique: true
   end
 
   create_table "statuses", force: :cascade do |t|
