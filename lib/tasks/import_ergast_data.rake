@@ -25,12 +25,19 @@ namespace :db do
 
     Circuit.import circuits_cols, circuits, validate: false
 
-    # import constructors
-    constructors_cols = %i[id nickname name nationality url]
-    constructors = CSV.parse(File.read(data_loc + 'constructors.csv'),
-                             headers: true, return_headers: false).map(&:fields)
+    # import statuses
+    statuses_cols = %i[id status]
+    statuses = CSV.parse(File.read(data_loc + 'status.csv'),
+                         headers: true, return_headers: false).map(&:fields)
 
-    Constructor.import constructors_cols, constructors, validate: false
+    Status.import statuses_cols, statuses, validate: false
+
+    # import races
+    races_cols = %i[id year round circuit_id name date time url]
+    races = CSV.parse(File.read(data_loc + 'races.csv'),
+                      headers: true, return_headers: false).map(&:fields)
+
+    Race.import races_cols, races, validate: false
 
     # import drivers
     drivers_cols = %i[id nickname number code forename surname dob nationality url]
@@ -38,6 +45,13 @@ namespace :db do
                         headers: true, return_headers: false).map(&:fields)
 
     Driver.import drivers_cols, drivers, validate: false
+
+    # import constructors
+    constructors_cols = %i[id nickname name nationality url]
+    constructors = CSV.parse(File.read(data_loc + 'constructors.csv'),
+                             headers: true, return_headers: false).map(&:fields)
+
+    Constructor.import constructors_cols, constructors, validate: false
 
     # import constructor results
     constructor_results_cols = %i[id race_id constructor_id points status]
@@ -59,13 +73,6 @@ namespace :db do
                                  headers: true, return_headers: false).map(&:fields)
 
     DriverStanding.import driver_standings_cols, driver_standings, validate: false
-
-    # import races
-    races_cols = %i[id year round circuit_id name date time url]
-    races = CSV.parse(File.read(data_loc + 'races.csv'),
-                      headers: true, return_headers: false).map(&:fields)
-
-    Race.import races_cols, races, validate: false
 
     # import lap times
     lap_times_cols = %i[race_id driver_id lap position time milliseconds]
@@ -96,13 +103,6 @@ namespace :db do
                         headers: true, return_headers: false).map(&:fields)
 
     Result.import results_cols, results, validate: false
-
-    # import statuses
-    statuses_cols = %i[id status]
-    statuses = CSV.parse(File.read(data_loc + 'status.csv'),
-                         headers: true, return_headers: false).map(&:fields)
-
-    Status.import statuses_cols, statuses, validate: false
 
     puts 'Import completed!'
   end

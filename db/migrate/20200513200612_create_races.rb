@@ -3,7 +3,7 @@ class CreateRaces < ActiveRecord::Migration[6.0]
     create_table :races do |t|
       t.integer :year, null: false
       t.integer :round, null: false
-      t.integer :circuit_id, null: false
+      t.bigint :circuit_id, null: false
       t.string :name, null: false
       t.date :date, null: false
       t.time :time

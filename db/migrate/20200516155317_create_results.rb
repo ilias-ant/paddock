@@ -1,9 +1,9 @@
 class CreateResults < ActiveRecord::Migration[6.0]
   def change
     create_table :results do |t|
-      t.integer :race_id, null: false
-      t.integer :driver_id, null: false
-      t.integer :constructor_id, null: false
+      t.bigint :race_id, null: false
+      t.bigint :driver_id, null: false
+      t.bigint :constructor_id, null: false
       t.integer :number
       t.integer :grid, null: false
       t.integer :position
@@ -17,7 +17,7 @@ class CreateResults < ActiveRecord::Migration[6.0]
       t.integer :rank
       t.string :fastest_lap_time
       t.string :fastest_lap_speed
-      t.integer :status_id, null: false
+      t.bigint :status_id, null: false
 
       t.timestamps
     end

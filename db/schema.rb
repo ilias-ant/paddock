@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_16_155725) do
+ActiveRecord::Schema.define(version: 2020_05_20_205719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "constructor_results", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "constructor_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "constructor_id", null: false
     t.float "points"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "constructor_standings", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "constructor_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "constructor_id", null: false
     t.float "points", null: false
     t.integer "position"
     t.string "position_text"
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "driver_standings", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "driver_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "driver_id", null: false
     t.float "points", null: false
     t.integer "position"
     t.string "position_text"
@@ -82,8 +82,8 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "lap_times", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "driver_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "driver_id", null: false
     t.integer "lap", null: false
     t.integer "position"
     t.string "time"
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "pit_stops", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "driver_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "driver_id", null: false
     t.integer "stop", null: false
     t.integer "lap", null: false
     t.string "time", null: false
@@ -105,9 +105,9 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "qualifyings", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "driver_id", null: false
-    t.integer "constructor_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "driver_id", null: false
+    t.bigint "constructor_id", null: false
     t.integer "number", null: false
     t.integer "position"
     t.string "q1"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   create_table "races", force: :cascade do |t|
     t.integer "year", null: false
     t.integer "round", null: false
-    t.integer "circuit_id", null: false
+    t.bigint "circuit_id", null: false
     t.string "name", null: false
     t.date "date", null: false
     t.time "time"
@@ -130,9 +130,9 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer "race_id", null: false
-    t.integer "driver_id", null: false
-    t.integer "constructor_id", null: false
+    t.bigint "race_id", null: false
+    t.bigint "driver_id", null: false
+    t.bigint "constructor_id", null: false
     t.integer "number"
     t.integer "grid", null: false
     t.integer "position"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
     t.integer "rank"
     t.string "fastest_lap_time"
     t.string "fastest_lap_speed"
-    t.integer "status_id", null: false
+    t.bigint "status_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -165,4 +165,23 @@ ActiveRecord::Schema.define(version: 2020_05_16_155725) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "constructor_results", "constructors"
+  add_foreign_key "constructor_results", "races"
+  add_foreign_key "constructor_standings", "constructors"
+  add_foreign_key "constructor_standings", "races"
+  add_foreign_key "driver_standings", "drivers"
+  add_foreign_key "driver_standings", "races"
+  add_foreign_key "lap_times", "drivers"
+  add_foreign_key "lap_times", "races"
+  add_foreign_key "pit_stops", "drivers"
+  add_foreign_key "pit_stops", "races"
+  add_foreign_key "qualifyings", "constructors"
+  add_foreign_key "qualifyings", "drivers"
+  add_foreign_key "qualifyings", "races"
+  add_foreign_key "races", "circuits"
+  add_foreign_key "races", "seasons", column: "year", primary_key: "year"
+  add_foreign_key "results", "constructors"
+  add_foreign_key "results", "drivers"
+  add_foreign_key "results", "races"
+  add_foreign_key "results", "statuses"
 end
